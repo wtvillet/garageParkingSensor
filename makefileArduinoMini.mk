@@ -12,11 +12,14 @@ TARGET=main
 SRCS  = src/main.c
 SRCS += src/comms/uart.c
 SRCS += src/hardware/io.c
-
+SRCS += src/hardware/timers.c
+SRCS += src/sensors/ultrasonicDistanceSensor.c
 
 DEPS =  src/commonIncludes.h
 DEPS += src/comms/uart.h
 DEPS += src/hardware/io.h
+DEPS += src/hardware/timers.h
+DEPS += src/sensors/ultrasonicDistanceSensor.h
 
 PORT=/dev/ttyUSB0
 

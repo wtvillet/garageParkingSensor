@@ -13,6 +13,8 @@
 
 #include "comms/uart.h"
 #include "hardware/io.h"
+#include "hardware/timers.h"
+#include "sensors/ultrasonicDistanceSensor.h"
 
 #define SPEED_OF_SOUND_IN_CM_S     (float)(331/10)
 #define TIMER_TO_U_SECONDS         (float)1000000*64/F_CPU

@@ -34,6 +34,7 @@ int main()
     //Setup the UART comms
     USART_init();
     HARDWARE_init();
+    TIMERS_initTimers();
 
     //Set up the interrupt vector table
     sei();
@@ -54,12 +55,8 @@ int main()
         }
         if(display)
         {
-            float elapsedTime_us_float = (float)(tempVar+1)*TIMER_TO_U_SECONDS; //us
-            float distance = ((float) SPEED_OF_SOUND_IN_CM_S * (float) elapsedTime_us_float)
-                    / (float) 2000;
-            printf("%u counts\n",tempVar);
-            printf("%f us\n",elapsedTime_us_float);
-            printf("%0.2f cm\n",distance);
+            UDS_addInterruptTime(tempVar);
+            UDS_getObjectDistance();
             display = false;
         }
     }

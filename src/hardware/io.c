@@ -12,7 +12,4 @@ void HARDWARE_init(void)
     DDRD |=  (1 << 3);          //Make PD3 Output
 
     PORTD |= (1 << PORTD2);    // turn On the Pull-up
-
-    //Config and enable Timer1
-    TCCR1B = (0<<CS12)|(1<<CS11)|(1<<CS10); 
 }
