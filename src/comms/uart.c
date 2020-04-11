@@ -22,31 +22,15 @@ static void USART_setup( unsigned int ubrr)
 	UBRR0L = (unsigned char)ubrr;
 
 	/*Enable receiver and transmitter enable interrupt on RX*/
-	UCSR0B = (1<<RXEN0) | (1<<RXCIE0);//|(1<<TXEN0)
+	UCSR0B = (1<<RXEN0) | (1<<RXCIE0) | (1<<TXEN0);
 
 	/* Set frame format: 8data, 2stop bit */
 	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 }
 
-static void USART_enableTx(void)
-{
-	/*Enable transmitter*/
-	UCSR0B = UCSR0B | (1<<TXEN0);
-	DDRD |= (1 << 1); //Make PD2 input
-	_delay_ms(10);
-}
-
-static void USART_disableTx(void)
-{
-	/*Disable transmitter*/
-	UCSR0B &= ~(1 << TXEN0);
-	DDRD &= ~(1 << 1); //Make PD2 input
-}
-
 
 int USART_sendBytePrintf(char u8Data, FILE *stream)
 {
-	USART_enableTx();
 	if(u8Data == '\n')
 	{
 		USART_sendBytePrintf('\r', stream);
@@ -56,42 +40,35 @@ int USART_sendBytePrintf(char u8Data, FILE *stream)
 	while(!(UCSR0A&(1<<UDRE0))){};
 	// Transmit data
 	UDR0 = u8Data;
-	USART_disableTx();
 	return 0;
 }
 
 /* Simple methods to make UART read and transmit more readble*/
 void USART_sendByte( unsigned char data )
 {
-	USART_enableTx();
 	//Wait for empty transmit buffer
 	while(!(UCSR0A & (1<<UDRE0)));
 	UDR0 = data;
-	USART_disableTx();
 }
 
 void USART_sendByteArray( unsigned char *data, uint32_t length )
 {
-	USART_enableTx();
 	for (uint32_t counter = 0 ;counter < length; counter++)
 	{
 		//Wait for empty transmit buffer
 		while(!(UCSR0A & (1<<UDRE0)));
 		UDR0 = data[counter];
 	}
-	USART_disableTx();
 }
 
 void USART_sendByteArraySigned(char *data, uint32_t length )
 {
-	USART_enableTx();
 	for (uint32_t counter = 0 ;counter < length; counter++)
 	{
 		//Wait for empty transmit buffer
 		while(!(UCSR0A & (1<<UDRE0)));
 		UDR0 = data[counter];
 	}
-	USART_disableTx();
 }
 
 void USART_sendString(char *StringPtr)

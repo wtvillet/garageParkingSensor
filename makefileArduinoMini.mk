@@ -11,10 +11,12 @@ TARGET=main
 
 SRCS  = src/main.c
 SRCS += src/comms/uart.c
+SRCS += src/hardware/io.c
 
 
 DEPS =  src/commonIncludes.h
 DEPS += src/comms/uart.h
+DEPS += src/hardware/io.h
 
 PORT=/dev/ttyUSB0
 
