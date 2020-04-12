@@ -11,4 +11,5 @@ bool USART_rxDataAvailable(void);
 void USART_fillRxBuffer(char newPackage);
 void USART_sendByteArray( unsigned char *data, uint32_t length);
 void USART_sendByteArraySigned(char *data, uint32_t length );
+
 #endif

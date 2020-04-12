@@ -5,12 +5,16 @@
 
 int main()
 {
-    //Setup the UART comms
+    // Setup the UART comms
     USART_init();
+    // Set up the hardware pins
     HARDWARE_init();
+    // Set up the timers
     TIMERS_initTimers();
+    // Set up the ultrasonice distance sensor (UDS)
+    UDS_initSensor();
 
-    //Set up the interrupt vector table
+    // Set up the interrupt vector table
     sei();
 
     printf("ATMEL Started up.\n");
@@ -26,8 +30,10 @@ int main()
             counter = 0;
         }
 
+        // Check if interrupts fired in ISR
         if(UDS_dataReady())
         {
+            // Process interrupt data and get object distance
             UDS_getObjectDistance();
         }
     }

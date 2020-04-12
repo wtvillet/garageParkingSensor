@@ -1,20 +1,13 @@
 #include "uart.h"
-#include "communicationProtocol.h"
 
 /* UART SERIAL DEFINES */
-#define BAUD 9600
-#define MYUBRR F_CPU/16/BAUD-1
-#define TX_BUFFER_SIZE  20
-#define RX_BUFFER_SIZE  20
+#define BAUD 			(uint16_t)9600
+#define MYUBRR 			(uint32_t)F_CPU/16/BAUD-1
 
 //set stream pointer
 FILE usart0_str = FDEV_SETUP_STREAM(USART_sendBytePrintf, NULL, _FDEV_SETUP_WRITE);
 
-/****************************************************************************
-    Bit and byte definitions
-****************************************************************************/
-
-/* SETUP UART */
+// Set up UART register settings
 static void USART_setup( unsigned int ubrr)
 {
 	/*Set baud rate */
@@ -28,7 +21,7 @@ static void USART_setup( unsigned int ubrr)
 	UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 }
 
-
+// The printf function is rerouted here
 int USART_sendBytePrintf(char u8Data, FILE *stream)
 {
 	if(u8Data == '\n')
@@ -43,7 +36,7 @@ int USART_sendBytePrintf(char u8Data, FILE *stream)
 	return 0;
 }
 
-/* Simple methods to make UART read and transmit more readble*/
+// UART transmit a sinlge byte
 void USART_sendByte( unsigned char data )
 {
 	//Wait for empty transmit buffer
@@ -51,6 +44,7 @@ void USART_sendByte( unsigned char data )
 	UDR0 = data;
 }
 
+// UART transmit byte array
 void USART_sendByteArray( unsigned char *data, uint32_t length )
 {
 	for (uint32_t counter = 0 ;counter < length; counter++)
@@ -61,6 +55,7 @@ void USART_sendByteArray( unsigned char *data, uint32_t length )
 	}
 }
 
+// UART transmit signed charactar array
 void USART_sendByteArraySigned(char *data, uint32_t length )
 {
 	for (uint32_t counter = 0 ;counter < length; counter++)
@@ -71,6 +66,7 @@ void USART_sendByteArraySigned(char *data, uint32_t length )
 	}
 }
 
+// UART transmit string
 void USART_sendString(char *StringPtr)
 {
 	uint32_t lengthCounter = 0;
@@ -81,6 +77,7 @@ void USART_sendString(char *StringPtr)
 	USART_sendByteArraySigned(&StringPtr[0], lengthCounter);
 }
 
+// Init the UART trasnmit protocol
 void USART_init(void)
 {
 	USART_setup(MYUBRR);
