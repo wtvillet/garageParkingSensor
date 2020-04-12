@@ -1,7 +1,5 @@
 #include "io.h"
 
-
-
 void HARDWARE_init(void)
 {
     //https://sites.google.com/site/qeewiki/books/avr-guide/external-interrupts-on-the-atmega328
@@ -12,4 +10,19 @@ void HARDWARE_init(void)
     DDRD |=  (1 << 3);          //Make PD3 Output
 
     PORTD |= (1 << PORTD2);    // turn On the Pull-up
+
+    PORTB &= ~_BV(PORTB5);     // Clear the on board LED
+}
+
+// Toggle the on board led. Makes code more portable to do it this way
+void HARDWARE_toggleOnBoardLED(bool ledOn)
+{
+	if(ledOn)
+	{
+		PORTB |= _BV(PORTB5);	// Set the on board LED
+	}
+	else
+	{
+		PORTB &= ~_BV(PORTB5);	// Clear the on board LED
+	}
 }

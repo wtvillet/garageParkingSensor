@@ -15,7 +15,7 @@ int main()
 
     printf("ATMEL Started up.\n");
     uint32_t counter = 0;
-    PORTB &= ~_BV(PORTB5);
+
     while(1)
     {
         counter++;
@@ -24,14 +24,11 @@ int main()
             printf("Fire\n");
             UDS_triggerSensor();
             counter = 0;
-            //TCNT1 = 0;
-            //PORTB &= ~_BV(PORTB5);
         }
+
         if(UDS_dataReady())
         {
-            //UDS_addInterruptTime(tempVar);
             UDS_getObjectDistance();
-            //display = false;
         }
     }
 }
