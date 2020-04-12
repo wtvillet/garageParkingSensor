@@ -37,6 +37,7 @@ void UDS_getObjectDistance(void)
 	printf("%u counts\n",interruptTimePushed);
 	printf("%f us\n",elapsedTime_us_float);
 	printf("%0.2f cm\n",distance);
+	// Clear the data ready flag
 	dataReady = false;
 }
 

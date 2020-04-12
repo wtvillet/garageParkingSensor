@@ -5,4 +5,5 @@
 
 void TIMERS_initTimers(void);
 uint16_t getTimer1Value(void);
+
 #endif

@@ -7,7 +7,7 @@ void HARDWARE_init(void)
 	EIMSK |= (1 << INT0);       				// Turns on INT0
 
 	DDRD &= ~(1 << UDS_ECHO_INTERRUPT_PIN);		// Make PD2 input
-	DDRD |=  (1 << 3);          				// Make PD3 Output
+	DDRD |=  (1 << UDS_TRIGGER_PIN);          				// Make PD3 Output
 
 	PORTD |= (1 << PORTD2);    					// Turn On the Pull-up
 
@@ -33,11 +33,11 @@ void HARDWARE_toggleTriggerPin(bool pinHigh)
 	if(pinHigh)
 	{
 		// Set the pin high
-		PORTD |=  (1 << 3);
+		PORTD |=  (1 << UDS_TRIGGER_PIN);
 	}
 	else
 	{
 		// Set the pin low
-		PORTD &= ~(1 << 3);
+		PORTD &= ~(1 << UDS_TRIGGER_PIN);
 	}
 }
