@@ -13,6 +13,7 @@ SRCS  = src/main.c
 SRCS += src/comms/uart.c
 SRCS += src/hardware/io.c
 SRCS += src/hardware/timers.c
+SRCS += src/hardware/interrupt.c
 SRCS += src/sensors/ultrasonicDistanceSensor.c
 
 DEPS =  src/commonIncludes.h

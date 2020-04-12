@@ -2,9 +2,25 @@
 
 static uint16_t interruptTimePushed = 0;
 
-void UDS_addInterruptTime(uint16_t interruptTime)
+static bool display = false;
+void UDS_addInterruptTime(bool risingEdge)
 {
-	interruptTimePushed = interruptTime;
+	if(risingEdge)
+	{
+		//Grab the time. Use function instead of global variable to make code portable
+		interruptTimePushed = getTimer1Value();
+	}
+	else
+	{
+		//Grab the time. Use function instead of global variable to make code portable
+		interruptTimePushed = getTimer1Value() - interruptTimePushed;
+		display = true;
+	}
+}
+
+bool UDS_dataReady(void)
+{
+	return display;
 }
 
 void UDS_getObjectDistance(void)
@@ -15,4 +31,14 @@ void UDS_getObjectDistance(void)
     printf("%u counts\n",interruptTimePushed);
     printf("%f us\n",elapsedTime_us_float);
     printf("%0.2f cm\n",distance);
+    display = false;
+}
+
+
+void UDS_triggerSensor(void)
+{
+    //transmit at least 10 us trigger pulse to the HC-SR04 Trig Pin.
+    PORTD |=  (1 << 3);
+    _delay_us( 10 );
+    PORTD &= ~(1 << 3);
 }

@@ -1,33 +1,7 @@
-//Intelectual property of wtvillet
+// Intelectual property of wtvillet
+// Contact at wtvillet@gmail.com
 
 #include "commonIncludes.h"
-
-
-uint32_t tempVar = 0;
-bool display = false;
-ISR( INT0_vect )
-{
-    if(PIND & (1 << 2)) 
-    {
-        tempVar = TCNT1;    
-        PORTB |= _BV(PORTB5);
-    }/* Clear Timer counter */
-    else
-    {
-        tempVar = TCNT1 - tempVar;
-        TCNT1 = 0;
-        display = true;
-        PORTB &= ~_BV(PORTB5);
-    }
-}
-
-static void hc_sr04_meas( void )
-{   
-    //transmit at least 10 us trigger pulse to the HC-SR04 Trig Pin.
-    PORTD |=  (1 << 3);
-    _delay_us( 10 );
-    PORTD &= ~(1 << 3);    
-}
 
 int main()
 {
@@ -48,16 +22,16 @@ int main()
         if (counter >= 5000000)
         {
             printf("Fire\n");
-            hc_sr04_meas();
+            UDS_triggerSensor();
             counter = 0;
             //TCNT1 = 0;
-            PORTB &= ~_BV(PORTB5);
+            //PORTB &= ~_BV(PORTB5);
         }
-        if(display)
+        if(UDS_dataReady())
         {
-            UDS_addInterruptTime(tempVar);
+            //UDS_addInterruptTime(tempVar);
             UDS_getObjectDistance();
-            display = false;
+            //display = false;
         }
     }
 }
