@@ -26,3 +26,8 @@ ISR( INT0_vect )
 		UDS_interruptFired(false);
 	}
 }
+
+ISR (TIMER1_COMPA_vect)
+{
+	UDS_serviceInterrupt();
+}

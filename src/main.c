@@ -23,9 +23,9 @@ int main()
     while(1)
     {
         counter++;
-        if (counter >= 5000000)
+        if(UDS_getServiceStatus())
         {
-            printf("Fire\n");
+            //printf("Fire\n");
             UDS_triggerSensor();
             counter = 0;
         }
