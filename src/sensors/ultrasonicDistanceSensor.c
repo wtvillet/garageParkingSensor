@@ -24,8 +24,15 @@ void UDS_interruptFired(bool risingEdge)
 		interruptTimePushed = getTimer1Value() - interruptTimePushed;
 		// Data is ready to be processed
 		//dataReady = true;
-		interruptTimeArray[averagingCounter] = interruptTimePushed;
-		averagingCounter++;
+		if(averagingCounter >= UDS_AVERAGING_SIZE)
+		{
+			printf("ERROR\n");
+		}
+		else
+		{
+			interruptTimeArray[averagingCounter] = interruptTimePushed;
+			averagingCounter++;
+		}
 	}
 }
 
