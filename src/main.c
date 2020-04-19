@@ -18,16 +18,13 @@ int main()
     sei();
 
     printf("ATMEL Started up.\n");
-    uint32_t counter = 0;
 
     while(1)
     {
-        counter++;
         if(UDS_getServiceStatus())
         {
             //printf("Fire\n");
             UDS_triggerSensor();
-            counter = 0;
         }
 
         // Check if interrupts fired in ISR

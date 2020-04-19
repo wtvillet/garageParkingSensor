@@ -16,6 +16,7 @@
 #include "hardware/timers.h"
 #include "sensors/ultrasonicDistanceSensor.h"
 
-#define SPEED_OF_SOUND_IN_CM_S     (float)(331/10)
+#define SPEED_OF_SOUND_IN_CM_S		(float)(331/10.0f)
+#define ROUND_U(x)      			(uint16_t)((x) + 0.5f)
 
 #endif

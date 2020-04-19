@@ -5,10 +5,11 @@
 //https://sites.google.com/site/qeewiki/books/avr-guide/timers-on-the-atmega328
 //OCRn =  [ (clock_speed / Prescaler_value) * Desired_time_in_Seconds ] - 1
 
+// (16000000/1024)*1secong - 1 = 0x3D08
 void TIMERS_initTimers(void)
 {
     //Counter stop value
-    OCR1A = 0xFFFF;
+    OCR1A = TIMER1_INTERRUPT_CONFIG;
 
     // Mode 4, CTC on OCR1A
     TCCR1B |= (1 << WGM12);
@@ -16,7 +17,7 @@ void TIMERS_initTimers(void)
     //Set interrupt on compare match
     TIMSK1 |= (1 << OCIE1A);
 
-    //Config and enable Timer1
+    //Config and enable Timer1. Prescaler set to 64
     TCCR1B = (0<<CS12)|(1<<CS11)|(1<<CS10);
 }
 
